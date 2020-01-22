@@ -3,4 +3,22 @@
     ViewData["Lead"] = "Bringing quality computer parts to you since 1999.";
     ViewData["Content"] = "Morbi finibus luctus nulla sit amet egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent in ornare dolor, at blandit lectus. Pellentesque fringilla metus eget mi sagittis, sollicitudin vehicula odio commodo. Morbi suscipit ipsum vitae odio cursus placerat. Aliquam mattis laoreet tortor. Donec dignissim dapibus odio, non facilisis massa dapibus eget. Maecenas cursus enim sit amet quam elementum porta. Vivamus elementum iaculis sapien at feugiat.";
     ViewData["CallToAction"] = "View Store";
+    var cultures = ViewBag.Cultures as System.Globalization.CultureInfo[];
+    var listItems = cultures.Select(c => new SelectListItem() {
+        Text = c.EnglishName
+    });
 }
+
+<h2>Available Languages</h2>
+
+<div class="row">
+    <div class="col-xs-6">
+        @Html.ListBox("lang", listItems)
+    </div>
+    <div class="col-xs-6">
+        @Html.DropDownList("lang2", listItems)
+    </div>
+</div>
+
+
+

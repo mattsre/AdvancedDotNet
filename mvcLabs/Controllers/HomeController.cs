@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using mvcLabs.Models;
+using System.Globalization;
 
 namespace mvcLabs.Controllers
 {
@@ -25,6 +26,8 @@ namespace mvcLabs.Controllers
 
         public IActionResult About()
         {
+            var cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+            ViewBag.Cultures = cultures;
             return View();
         }
 
