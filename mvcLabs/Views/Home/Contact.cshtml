@@ -1,3 +1,5 @@
+@model mvcLabs.Models.CultureViewModel
+
 @{
     ViewData["Title"] = "Joe's Contact Information";
     ViewData["Lead"] = "24x5 Support";
@@ -11,3 +13,12 @@
     <abbr title="Phone">P:</abbr>
     425.555.0100
 </address>
+
+<div class="row">
+    <div class="col-xs-6">
+        @Html.ListBox("lang", Model.CulturesList)
+    </div>
+    <div class="col-xs-6">
+        @Html.DropDownList("lang2", Model.CulturesList)
+    </div>
+</div>

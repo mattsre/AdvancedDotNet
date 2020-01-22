@@ -33,7 +33,8 @@ namespace mvcLabs.Controllers
 
         public IActionResult Contact()
         {
-            return View();
+            var viewModel = new CultureViewModel(CultureInfo.GetCultures(CultureTypes.SpecificCultures));
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
