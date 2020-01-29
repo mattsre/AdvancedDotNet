@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using MVCLab1.Models;
 
 namespace MVCLab1.Controllers
@@ -23,19 +20,36 @@ namespace MVCLab1.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Features()
         {
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult Pricing()
         {
-            return View();
-        }
+            var PricingOptions = new List<PricingModel>();
+            PricingOptions.Add(new PricingModel
+            {
+                PlanName = "Basic",
+                PlanDescription = "Testing123",
+                PlanCost = 14.99,
+            });
 
-        public IActionResult About()
-        {
-            return View();
+            PricingOptions.Add(new PricingModel
+            {
+                PlanName = "Startup",
+                PlanDescription = "Testing123",
+                PlanCost = 99.99,
+            });
+
+            PricingOptions.Add(new PricingModel
+            {
+                PlanName = "Enteprise",
+                PlanDescription = "Testing123",
+                PlanCost = 199.99,
+            });
+
+            return View(new PricingViewModel(PricingOptions));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

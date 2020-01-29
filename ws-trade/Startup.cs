@@ -51,9 +51,6 @@ namespace MVCLab1
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute("Contact", "Contact", new { controller = "Home", action = "Contact" });
-                endpoints.MapControllerRoute("About", "About", new { controller = "Home", action = "About" });
             });
         }
     }
