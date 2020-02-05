@@ -8,11 +8,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Data.SqlClient;
 
 namespace mvcLabs
 {
     public class Startup
     {
+        public static string _connection = null;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,6 +25,7 @@ namespace mvcLabs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            _connection = Configuration["MVCLabs:ConnectionString"];
             services.AddControllersWithViews();
         }
 
