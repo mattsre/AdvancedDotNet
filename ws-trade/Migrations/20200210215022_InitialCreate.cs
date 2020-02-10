@@ -20,12 +20,30 @@ namespace MVCLab1.Migrations
                 {
                     table.PrimaryKey("PK_PricingModels", x => x.ID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Stocks",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ticker = table.Column<string>(nullable: true),
+                    StockName = table.Column<string>(nullable: true),
+                    Price = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stocks", x => x.ID);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "PricingModels");
+
+            migrationBuilder.DropTable(
+                name: "Stocks");
         }
     }
 }
