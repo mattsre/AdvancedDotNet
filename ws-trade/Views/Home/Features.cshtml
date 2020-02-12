@@ -1,6 +1,23 @@
-﻿@{
+﻿@model MVCLab1.FeatureViewModel
+
+@{
     ViewData["Title"] = "Features";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>WS Trade Features</p>
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <p>WS Trade Features</p>
+    <div class="row">
+        @foreach (var feature in Model.Features)
+        {
+            <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">@feature.FeatureName</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@feature.FeatureDescription</h6>
+                <a href="#" class="card-link">Test Now</a>
+            </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
 namespace MVCLab1.Models
@@ -8,5 +9,7 @@ namespace MVCLab1.Models
         public string PlanName { get; set; }
         public string PlanDescription { get; set; }
         public double PlanCost { get; set; }
+
+        public List<FeatureModel> SupportedFeatures { get; set; }
     }
 }

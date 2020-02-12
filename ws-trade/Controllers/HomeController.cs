@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using MVCLab1.Models;
 
 namespace MVCLab1.Controllers
 {
+    [Route("/{action}")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,32 +24,20 @@ namespace MVCLab1.Controllers
 
         public IActionResult Features()
         {
-            return View();
+            var Features = new List<FeatureModel>();
+            using (var db = new TradingContext())
+            {
+                Features = db.Features.ToList();
+            }
+            return View(new FeatureViewModel(Features));
         }
-
         public IActionResult Pricing()
         {
             var PricingOptions = new List<PricingModel>();
-            PricingOptions.Add(new PricingModel
+            using (var db = new TradingContext())
             {
-                PlanName = "Basic",
-                PlanDescription = "Testing123",
-                PlanCost = 14.99,
-            });
-
-            PricingOptions.Add(new PricingModel
-            {
-                PlanName = "Startup",
-                PlanDescription = "Testing123",
-                PlanCost = 99.99,
-            });
-
-            PricingOptions.Add(new PricingModel
-            {
-                PlanName = "Enteprise",
-                PlanDescription = "Testing123",
-                PlanCost = 199.99,
-            });
+                PricingOptions = db.PricingPlans.OrderBy(p => p.PlanCost).ToList();
+            }
 
             return View(new PricingViewModel(PricingOptions));
         }

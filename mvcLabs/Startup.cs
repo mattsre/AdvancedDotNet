@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using mvcLabs.Models;
 
 namespace mvcLabs
 {
@@ -25,6 +27,7 @@ namespace mvcLabs
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CarContext>();
             _connection = Configuration["MVCLabs:ConnectionString"];
             services.AddControllersWithViews();
         }

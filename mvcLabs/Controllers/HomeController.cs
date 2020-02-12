@@ -37,6 +37,17 @@ namespace mvcLabs.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Cars()
+        {
+            CarViewModel viewModel;
+            using (var db = new CarContext())
+            {
+                viewModel = new CarViewModel(db.Cars.ToList());
+            }
+
+            return View(viewModel);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

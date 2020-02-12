@@ -6,8 +6,6 @@
 
 <h2>@ViewData["Title"]</h2>
 
-@Html.DropDownList("PricingList", Model.PricingOptionsDropDown)
-
 @foreach (var pricing in Model.PricingOptions)
 {
     <div class="card" style="width: 18rem;">
