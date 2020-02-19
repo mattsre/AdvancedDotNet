@@ -9,16 +9,61 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVCLab1.Migrations
 {
     [DbContext(typeof(TradingContext))]
-    [Migration("20200210215022_InitialCreate")]
+    [Migration("20200219004833_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("wsTrade")
                 .HasAnnotation("ProductVersion", "3.1.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("MVCLab1.Models.AccountModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("MVCLab1.Models.FeatureModel", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FeatureDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeatureName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PricingModelForeignKey")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PricingModelForeignKey");
+
+                    b.ToTable("Features");
+                });
 
             modelBuilder.Entity("MVCLab1.Models.PricingModel", b =>
                 {
@@ -38,7 +83,7 @@ namespace MVCLab1.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("PricingModels");
+                    b.ToTable("PricingPlans");
                 });
 
             modelBuilder.Entity("MVCLab1.Models.StockModel", b =>
@@ -60,6 +105,15 @@ namespace MVCLab1.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Stocks");
+                });
+
+            modelBuilder.Entity("MVCLab1.Models.FeatureModel", b =>
+                {
+                    b.HasOne("MVCLab1.Models.PricingModel", "PricingModel")
+                        .WithMany("SupportedFeatures")
+                        .HasForeignKey("PricingModelForeignKey")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

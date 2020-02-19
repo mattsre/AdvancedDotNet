@@ -11,12 +11,13 @@ namespace MVCLab1.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("wsTrade");
             modelBuilder.Entity<FeatureModel>()
                 .HasOne(f => f.PricingModel)
                 .WithMany(p => p.SupportedFeatures)
                 .HasForeignKey(f => f.PricingModelForeignKey);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-           => options.UseSqlServer(Startup._connection);
+           => options.UseSqlServer(Startup._connection, x => x.MigrationsHistoryTable("__EFMigrationsHistory", "wsTrade"));
     }
 }

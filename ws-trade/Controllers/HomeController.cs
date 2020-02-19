@@ -7,7 +7,6 @@ using MVCLab1.Models;
 
 namespace MVCLab1.Controllers
 {
-    [Route("/{action}")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

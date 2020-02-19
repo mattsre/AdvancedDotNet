@@ -6,14 +6,19 @@ namespace mvcLabs.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "mvcLabs");
+
             migrationBuilder.CreateTable(
                 name: "Cars",
+                schema: "mvcLabs",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Model = table.Column<string>(nullable: true),
-                    MaxSpeed = table.Column<double>(nullable: false)
+                    MaxSpeed = table.Column<double>(nullable: false),
+                    ImageLink = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -24,7 +29,8 @@ namespace mvcLabs.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Cars");
+                name: "Cars",
+                schema: "mvcLabs");
         }
     }
 }
