@@ -1,10 +1,12 @@
-@model IEnumerable<MVCLab1.Models.StockModel>
+@model MVCLab1.Models.StockViewModel;
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
+
+<h2>Balance: @Model.Account.Balance</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,19 +15,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Ticker)
+                @Html.DisplayNameFor(model => model.Stocks.First().Ticker)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StockName)
+                @Html.DisplayNameFor(model => model.Stocks.First().StockName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.Stocks.First().Price)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Stocks) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Ticker)
@@ -37,6 +39,8 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
+                <a asp-action="Buy" asp-route-id="@item.ID">Buy</a> |
+                <a asp-action="Sell" asp-route-id="@item.ID">Sell</a> |
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>

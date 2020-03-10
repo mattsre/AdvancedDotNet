@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace MVCLab1
+namespace MVCLab1.Models
 {
     public class PricingViewModel
     {

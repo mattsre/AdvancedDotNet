@@ -9,23 +9,22 @@ using mvcLabs.Models;
 
 namespace mvcLabs.Controllers
 {
-  public class CarsController : Controller
+  public class ManufacturersController : Controller
   {
     private readonly CarContext _context;
 
-    public CarsController(CarContext context)
+    public ManufacturersController(CarContext context)
     {
       _context = context;
     }
 
-    // GET: Cars
+    // GET: Manufacturer
     public async Task<IActionResult> Index()
     {
-      var carContext = _context.Cars.Include(c => c.Manufacturer);
-      return View(await carContext.ToListAsync());
+      return View(await _context.Manufacturers.ToListAsync());
     }
 
-    // GET: Cars/Details/5
+    // GET: Manufacturer/Details/5
     public async Task<IActionResult> Details(int? id)
     {
       if (id == null)
@@ -33,42 +32,39 @@ namespace mvcLabs.Controllers
         return NotFound();
       }
 
-      var car = await _context.Cars
-          .Include(c => c.Manufacturer)
+      var manufacturer = await _context.Manufacturers
           .FirstOrDefaultAsync(m => m.ID == id);
-      if (car == null)
+      if (manufacturer == null)
       {
         return NotFound();
       }
 
-      return View(car);
+      return View(manufacturer);
     }
 
-    // GET: Cars/Create
+    // GET: Manufacturer/Create
     public IActionResult Create()
     {
-      ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Make");
       return View();
     }
 
-    // POST: Cars/Create
+    // POST: Manufacturer/Create
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("ID,Model,MaxSpeed,ImageLink,ManufacturerID")] Car car)
+    public async Task<IActionResult> Create([Bind("ID,Make")] Manufacturer manufacturer)
     {
       if (ModelState.IsValid)
       {
-        _context.Add(car);
+        _context.Add(manufacturer);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
       }
-      ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Make", car.ManufacturerID);
-      return View(car);
+      return View(manufacturer);
     }
 
-    // GET: Cars/Edit/5
+    // GET: Manufacturer/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
       if (id == null)
@@ -76,23 +72,22 @@ namespace mvcLabs.Controllers
         return NotFound();
       }
 
-      var car = await _context.Cars.FindAsync(id);
-      if (car == null)
+      var manufacturer = await _context.Manufacturers.FindAsync(id);
+      if (manufacturer == null)
       {
         return NotFound();
       }
-      ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Make", car.ManufacturerID);
-      return View(car);
+      return View(manufacturer);
     }
 
-    // POST: Cars/Edit/5
+    // POST: Manufacturer/Edit/5
     // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
     // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("ID,Model,MaxSpeed,ImageLink,ManufacturerID")] Car car)
+    public async Task<IActionResult> Edit(int id, [Bind("ID,Make")] Manufacturer manufacturer)
     {
-      if (id != car.ID)
+      if (id != manufacturer.ID)
       {
         return NotFound();
       }
@@ -101,12 +96,12 @@ namespace mvcLabs.Controllers
       {
         try
         {
-          _context.Update(car);
+          _context.Update(manufacturer);
           await _context.SaveChangesAsync();
         }
         catch (DbUpdateConcurrencyException)
         {
-          if (!CarExists(car.ID))
+          if (!ManufacturerExists(manufacturer.ID))
           {
             return NotFound();
           }
@@ -117,11 +112,10 @@ namespace mvcLabs.Controllers
         }
         return RedirectToAction(nameof(Index));
       }
-      ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Make", car.ManufacturerID);
-      return View(car);
+      return View(manufacturer);
     }
 
-    // GET: Cars/Delete/5
+    // GET: Manufacturer/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
       if (id == null)
@@ -129,31 +123,30 @@ namespace mvcLabs.Controllers
         return NotFound();
       }
 
-      var car = await _context.Cars
-          .Include(c => c.Manufacturer)
+      var manufacturer = await _context.Manufacturers
           .FirstOrDefaultAsync(m => m.ID == id);
-      if (car == null)
+      if (manufacturer == null)
       {
         return NotFound();
       }
 
-      return View(car);
+      return View(manufacturer);
     }
 
-    // POST: Cars/Delete/5
+    // POST: Manufacturer/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-      var car = await _context.Cars.FindAsync(id);
-      _context.Cars.Remove(car);
+      var manufacturer = await _context.Manufacturers.FindAsync(id);
+      _context.Manufacturers.Remove(manufacturer);
       await _context.SaveChangesAsync();
       return RedirectToAction(nameof(Index));
     }
 
-    private bool CarExists(int id)
+    private bool ManufacturerExists(int id)
     {
-      return _context.Cars.Any(e => e.ID == id);
+      return _context.Manufacturers.Any(e => e.ID == id);
     }
   }
 }

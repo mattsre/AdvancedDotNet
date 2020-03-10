@@ -21,8 +21,60 @@ namespace MVCLab1.Controllers
         // GET: Stocks
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Stocks.ToListAsync());
+            var stocks = await _context.Stocks.ToListAsync();
+            var user = await _context.Accounts.FirstAsync();
+            var model = new StockViewModel(user, stocks); 
+            return View(model);
         }
+
+        // GET: Stocks/Buy/:id
+        public async Task<IActionResult> Buy(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var stockModel = await _context.Stocks
+                .FirstOrDefaultAsync(m => m.ID == id);
+            var user = await _context.Accounts.FirstAsync();
+            if (stockModel == null)
+            {
+                return NotFound();
+            }
+            user.Balance = Math.Round(user.Balance - stockModel.Price);
+            stockModel.Price += Math.Round((new Random().NextDouble()) * (100 - -100) + -100);
+            _context.Stocks.Update(stockModel);
+            _context.Accounts.Update(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Stocks/Sell/:id
+        public async Task<IActionResult> Sell(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var stockModel = await _context.Stocks
+                .FirstOrDefaultAsync(m => m.ID == id);
+            var user = await _context.Accounts.FirstAsync();
+            if (stockModel == null)
+            {
+                return NotFound();
+            }
+            user.Balance = Math.Round(user.Balance + stockModel.Price);
+            stockModel.Price += Math.Round((new Random().NextDouble()) * (100 - -100) + -100);
+            _context.Stocks.Update(stockModel);
+            _context.Accounts.Update(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         // GET: Stocks/Details/5
         public async Task<IActionResult> Details(int? id)

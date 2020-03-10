@@ -1,12 +1,17 @@
 @model IEnumerable<mvcLabs.Models.Car>
 
 @{
-    ViewData["Title"] = "Index";
     Layout = "_CarLayout";
 }
 
-<h1>Index</h1>
+<!DOCTYPE html>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -18,6 +23,12 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MaxSpeed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Manufacturer)
             </th>
             <th></th>
         </tr>
@@ -32,6 +43,12 @@
                 @Html.DisplayFor(modelItem => item.MaxSpeed)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ImageLink)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.Make)
+            </td>
+            <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
@@ -40,3 +57,5 @@
 }
     </tbody>
 </table>
+</body>
+</html>
